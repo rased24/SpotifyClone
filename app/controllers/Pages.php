@@ -2,20 +2,22 @@
 
 class Pages extends Controller
 {
-	protected $userModel;
+	private $userModel;
+	private $audioModel;
 
 	public function __construct()
 	{
-		$this->userModel = $this->model( 'User' );
+		$this->userModel  = $this->model( 'User' );
+		$this->audioModel = $this->model( 'Audio' );
 	}
 
 	public function index()
 	{
-		$users = $this->userModel->getUsers();
+		$audios = $this->audioModel->getAudios();
+
 		$data = [
-			'title' => 'Great Index',
-			'info'  => 'What\'s up bro?',
-			'users' => $users
+			'audios' => $audios,
+			'i'      => 1
 		];
 
 		$this->view( 'pages/index', $data );
@@ -24,5 +26,20 @@ class Pages extends Controller
 	public function about()
 	{
 		$this->view( 'pages/about' );
+	}
+
+	public function play()
+	{
+
+		$data = [
+			'yt_id' => '',
+		];
+
+		if ( $_SERVER[ 'REQUEST_METHOD' ] === 'GET' )
+		{
+			$data[ 'yt_id' ] = $_GET[ 'yt_id' ];
+
+		}
+		$this->view( 'pages/play', $data );
 	}
 }
