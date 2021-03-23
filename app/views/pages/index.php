@@ -5,7 +5,7 @@
 				<div class="new-songs">
 					<button type="button" class="btn btn-success" id="newSongsButton">New Songs</button>
 					<ul id="newSongs" class="list-group list-group-flush hidden">
-						<?php $audios = array_reverse( $data[ 'audios' ] ) ?>
+						<?php $audios = array_reverse( Store::audios() ) ?>
 						<?php for ( $i = 0; $i < 10; $i++ ): ?>
 
 							<?php if ( isset( $audios[ $i ] ) ): ?>
@@ -24,11 +24,9 @@
 						<?php for ( $i = 0; $i < 10; $i++ ): ?>
 
 							<?php if ( isset( $audios[ $i ] ) ): ?>
-
 								<li class="list-group-item">
 									<input type="radio" name="yt_id" value="<?= $audios[ $i ]->yt_id ?>">
 									<?= $audios[ $i ]->title ?>
-									<br>
 								</li>
 							<?php endif; ?><?php endfor; ?>
 					</ul>
@@ -49,7 +47,6 @@
 							<?php endif; ?><?php endfor; ?>
 					</ul>
 				</div>
-
 			</div>
 		</form>
 	</div>

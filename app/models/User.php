@@ -1,25 +1,26 @@
 <?php
 
-class User {
+class User
+{
 	private $db;
 
-	public function __construct()
+	public function __construct ()
 	{
 		$this->db = new Database();
 	}
 
-	public function getUsers()
+	public function getUsers ()
 	{
 		$this->db->query( 'SELECT * FROM users' );
 
 		return $this->db->resultSet();
 	}
 
-	public function findUserBy( $row, $data )
+	public function findUserBy ( $row, $data )
 	{
 		$this->db->query( 'SELECT * FROM users WHERE ' . $row . ' = :' . $row );
 
-		//Binding param with  variable
+		//Binding param with variable
 		$this->db->bind( ':' . $row, $data );
 
 		$this->db->execute();
@@ -35,10 +36,9 @@ class User {
 		}
 	}
 
-
-	public function register( $data )
+	public function register ( $data )
 	{
-		$this->db->query( 'INSERT INTO users (username, email, password)  VALUES (:username, :email, :password) ');
+		$this->db->query( 'INSERT INTO users (username, email, password)  VALUES (:username, :email, :password) ' );
 
 		//Bind the values
 		$this->db->bind( ':username', $data[ 'username' ] );
@@ -56,7 +56,7 @@ class User {
 
 	}
 
-	public function login( $username, $password )
+	public function login ( $username, $password )
 	{
 		$this->db->query( 'SELECT * FROM users WHERE username = :username' );
 
@@ -66,7 +66,7 @@ class User {
 
 		if ( $row )
 		{
-			$hashedPassword =  $row->password;
+			$hashedPassword = $row->password;
 
 			if ( password_verify( $password, $hashedPassword ) )
 			{

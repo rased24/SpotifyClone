@@ -3,10 +3,14 @@
 class Users extends Controller
 {
 	private $userModel;
+	private $audioModel;
+	private $playlistModel;
 
 	public function __construct ()
 	{
-		$this->userModel = $this->model( 'User' );
+		$this->userModel     = $this->model( 'User' );
+		$this->audioModel    = $this->model( 'Audio' );
+		$this->playlistModel = $this->model( 'Playlist' );
 	}
 
 	public function login ()
@@ -162,6 +166,7 @@ class Users extends Controller
 				//Register user from model function
 				if ( $this->userModel->register( $data ) )
 				{
+					$this->playlistModel->createPlaylist( $this->userModel->findUserBy( 'username', $data[ 'username' ] )->ID );
 					//Redirect to login page
 					header( 'location:' . URLROOT . '/users/login' );
 				}
@@ -176,9 +181,41 @@ class Users extends Controller
 		$this->view( 'users/register', $data );
 	}
 
-	public function createUserSession ( $user )
+	public function playlist ()
+	{
+		$this->view( 'includes/head' );
+		$this->view( 'includes/navigation' );
+		$this->view( 'users/playlist' );
+	}
+
+	public function addtoplaylist ()
 	{
 
+		if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' )
+		{
+			$data = [
+				'ID'     => Store::user()->ID,
+				'audios' => ''
+			];
+
+			$audio = $_POST[ 'addToPlaylist' ];
+
+			$playlist = json_decode( $this->playlistModel->getPlaylist( $data[ 'ID' ] )->playlist );
+
+			$playlist[] = $audio;
+
+			$playlist = json_encode( $playlist );
+
+			$data[ 'audios' ] = $playlist;
+
+			$this->playlistModel->addToPlaylist( $data );
+
+			header( 'location:' . URLROOT . '/users/playlist' );
+		}
+	}
+
+	public function createUserSession ( $user )
+	{
 		$_SESSION[ 'user_id' ] = $user->ID;
 
 	}

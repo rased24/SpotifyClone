@@ -4,23 +4,23 @@ class Audio
 {
 	private $db;
 
-	public function __construct()
+	public function __construct ()
 	{
 		$this->db = new Database();
 	}
 
-	public function getAudios()
+	public function getAudios ()
 	{
 		$this->db->query( 'SELECT * FROM audios' );
 
 		return $this->db->resultSet();
 	}
 
-	public function findAudioBy( $row, $data )
+	public function findAudioBy ( $row, $data )
 	{
 		$this->db->query( 'SELECT * FROM audios WHERE ' . $row . ' = :' . $row );
 
-		//Binding  param with  variable
+		//Binding param with variable
 		$this->db->bind( ':' . $row, $data );
 
 		$this->db->execute();
@@ -36,9 +36,9 @@ class Audio
 		}
 	}
 
-	public function addAudio( $data )
+	public function addAudio ( $data )
 	{
-		$this->db->query( 'INSERT INTO audios (title, album, thumbnail, url, yt_id)  VALUES (:title, :album, :thumbnail, :url, :yt_id) ');
+		$this->db->query( 'INSERT INTO audios (title, album, thumbnail, url, yt_id)  VALUES (:title, :album, :thumbnail, :url, :yt_id)' );
 
 		//Bind the values
 		$this->db->bind( ':title', $data[ 'title' ] );

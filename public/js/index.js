@@ -1,14 +1,12 @@
 ( function ( $ ) {
 
 	$( '#navbar' ).removeClass( 'navbar' );
-	
+
 	$( '#newSongsButton' ).on( 'click', function () {
 
 		if ( $( '#newSongs' ).hasClass( 'hidden' ) )
 		{
 			$( '#newSongs' ).removeClass( 'hidden' );
-			$( '#randomSongs' ).addClass( 'hidden' );
-			$( '#mostViewedSongs' ).addClass( 'hidden' );
 		}
 		else
 		{
@@ -21,8 +19,6 @@
 		if ( $( '#randomSongs' ).hasClass( 'hidden' ) )
 		{
 			$( '#randomSongs' ).removeClass( 'hidden' );
-			$( '#newSongs' ).addClass( 'hidden' );
-			$( '#mostViewedSongs' ).addClass( 'hidden' );
 		}
 		else
 		{
@@ -35,8 +31,6 @@
 		if ( $( '#mostViewedSongs' ).hasClass( 'hidden' ) )
 		{
 			$( '#mostViewedSongs' ).removeClass( 'hidden' );
-			$( '#newSongs' ).addClass( 'hidden' );
-			$( '#randomSongs' ).addClass( 'hidden' );
 		}
 		else
 		{
@@ -47,4 +41,6 @@
 	$( 'input[type=radio]' ).on( 'change', function () {
 		$( '#playAudio' ).submit();
 	} );
+
+
 } )( jQuery );
