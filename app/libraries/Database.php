@@ -1,20 +1,18 @@
 <?php
 
-
-class Database {
+class Database
+{
 	private $dbHost = DB_HOST;
 	private $dbUser = DB_USER;
 	private $dbPass = DB_PASS;
 	private $dbName = DB_NAME;
-
 	private $statement;
 	private $dbHandler;
 	private $error;
 
-
-	public function __construct()
+	public function __construct ()
 	{
-		$conn = 'mysql:host=' . $this->dbHost . ';dbname=' . $this->dbName;
+		$conn    = 'mysql:host=' . $this->dbHost . ';dbname=' . $this->dbName;
 		$options = [
 			PDO::ATTR_PERSISTENT => TRUE,
 			PDO::ATTR_ERRMODE    => PDO::ERRMODE_EXCEPTION
@@ -31,12 +29,12 @@ class Database {
 		}
 	}
 
-	public function query( $sql )
+	public function query ( $sql )
 	{
 		$this->statement = $this->dbHandler->prepare( $sql );
 	}
 
-	public function bind( $parameter, $value, $type = NULL )
+	public function bind ( $parameter, $value, $type = NULL )
 	{
 		switch ( is_null( $type ) )
 		{
@@ -57,27 +55,29 @@ class Database {
 	}
 
 	//Execute prepared statement
-	public function execute()
+	public function execute ()
 	{
 		return $this->statement->execute();
 	}
 
 	//Return an array
-	public function resultSet()
+	public function resultSet ()
 	{
 		$this->execute();
+
 		return $this->statement->fetchAll( PDO::FETCH_OBJ );
 	}
 
 	//Return only single row
-	public function  single()
+	public function single ()
 	{
 		$this->execute();
+
 		return $this->statement->fetch( PDO::FETCH_OBJ );
 	}
 
 	//Get the row count
-	public function rowCount()
+	public function rowCount ()
 	{
 		return $this->statement->rowCount();
 	}

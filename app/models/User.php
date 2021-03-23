@@ -15,7 +15,7 @@ class User {
 		return $this->db->resultSet();
 	}
 
-	public function findAudioBy( $row, $data )
+	public function findUserBy( $row, $data )
 	{
 		$this->db->query( 'SELECT * FROM users WHERE ' . $row . ' = :' . $row );
 
@@ -27,7 +27,7 @@ class User {
 
 		if ( $res )
 		{
-			return TRUE;
+			return $res;
 		}
 		else
 		{

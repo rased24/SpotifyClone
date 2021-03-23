@@ -38,7 +38,7 @@ class Users extends Controller
 			//Validate password
 			if ( empty( $data[ 'password' ] ) )
 			{
-				$data[ 'passwordError' ] ='Please enter password.';
+				$data[ 'passwordError' ] = 'Please enter password.';
 			}
 
 			//Check if all errors are empty
@@ -54,12 +54,15 @@ class Users extends Controller
 				else
 				{
 					$data[ 'passwordError' ] = 'Password or username is incorrect.';
+
+					$this->view( 'includes/head' );
+					$this->view( 'includes/navigation' );
 					$this->view( 'users/login', $data );
 				}
 			}
-
 		}
-
+		$this->view( 'includes/head' );
+		$this->view( 'includes/navigation' );
 		$this->view( 'users/login', $data );
 	}
 
@@ -151,7 +154,7 @@ class Users extends Controller
 			}
 
 			//Check if all errors are empty
-			if ( empty( $data[ 'usernameError' ] ) && empty( $data[ 'emailError' ] ) && empty( $data[ 'passwordError' ] ) && empty( $data[ 'confirmPasswordError' ] )  )
+			if ( empty( $data[ 'usernameError' ] ) && empty( $data[ 'emailError' ] ) && empty( $data[ 'passwordError' ] ) && empty( $data[ 'confirmPasswordError' ] ) )
 			{
 				//Hash password
 				$data[ 'password' ] = password_hash( $data[ 'password' ], PASSWORD_DEFAULT );
@@ -160,7 +163,7 @@ class Users extends Controller
 				if ( $this->userModel->register( $data ) )
 				{
 					//Redirect to login page
-					header( 'location:' . URLROOT . '/users/login');
+					header( 'location:' . URLROOT . '/users/login' );
 				}
 				else
 				{
@@ -168,28 +171,22 @@ class Users extends Controller
 				}
 			}
 		}
-
+		$this->view( 'includes/head' );
+		$this->view( 'includes/navigation' );
 		$this->view( 'users/register', $data );
 	}
 
-	public function  createUserSession( $user )
+	public function createUserSession ( $user )
 	{
 
-		$_SESSION[ 'user_id' ]  = $user->ID;
-		$_SESSION[ 'username' ] = $user->username;
-		$_SESSION[ 'email' ]    = $user->email;
-		$_SESSION[ 'is_admin' ] = $user->is_admin;
+		$_SESSION[ 'user_id' ] = $user->ID;
 
 	}
 
-	public function logout()
+	public function logout ()
 	{
 		unset( $_SESSION[ 'user_id' ] );
-		unset( $_SESSION[ 'username' ] );
-		unset( $_SESSION[ 'email' ] );
-		unset( $_SESSION[ 'is_admin' ] );
 
-
-		header( 'location:' . URLROOT );
+		header( 'location:' . URLROOT . '/users/login' );
 	}
 }

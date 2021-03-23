@@ -2,15 +2,19 @@
 
 class Admin extends Controller
 {
-	private  $audioModel;
+	private $audioModel;
+	private $userModel;
 
 	public function __construct ()
 	{
 		$this->audioModel = $this->model( 'Audio' );
+		$this->userModel  = $this->model( 'User' );
 	}
 
-	public function  addaudio()
+	public function addaudio ()
 	{
+		$user = isset( $_SESSION[ 'user_id' ] ) ? $this->userModel->findUserBy( 'ID', $_SESSION[ 'user_id' ] ) : '';
+
 		$data = [
 			'title'          => '',
 			'album'          => '',
@@ -20,20 +24,21 @@ class Admin extends Controller
 			'albumError'     => '',
 			'thumbnailError' => '',
 			'urlError'       => '',
-
+			'user'           => $user
 		];
 
 		if ( $_SERVER[ 'REQUEST_METHOD' ] === 'POST' )
 		{
 
 			$data = [
-				'title'          => trim( $_POST[ 'title' ] ),
-				'album'          => trim( $_POST[ 'album'] ),
-				'thumbnail'      => trim( $_POST[ 'thumbnail' ] ),
-				'url'            => filter_var( trim( $_POST[ 'url' ] ), FILTER_VALIDATE_URL ),
-				'titleError'     => '',
-				'albumError'     => '',
-				'urlError'       => '',
+				'title'      => trim( $_POST[ 'title' ] ),
+				'album'      => trim( $_POST[ 'album' ] ),
+				'thumbnail'  => trim( $_POST[ 'thumbnail' ] ),
+				'url'        => filter_var( trim( $_POST[ 'url' ] ), FILTER_VALIDATE_URL ),
+				'titleError' => '',
+				'albumError' => '',
+				'urlError'   => '',
+				'user'       => $user
 			];
 
 			//Validate title
@@ -58,18 +63,15 @@ class Admin extends Controller
 				$data[ 'urlError' ] = 'You must use Youtube Url.';
 			}
 
-			preg_match( '@https://i.ytimg.com/vi/(.*)/hqdefault.jpg@', $data[ 'thumbnail' ] , $test );
+			preg_match( '@https://i.ytimg.com/vi/(.*)/hqdefault.jpg@', $data[ 'thumbnail' ], $result );
 
-			$data[ 'yt_id' ] = $test[ 1 ];
-
+			$data[ 'yt_id' ] = $result[ 1 ];
 
 			//Check if audio exists in database
 			if ( $this->audioModel->findAudioBy( 'yt_id', $data[ 'yt_id' ] ) )
 			{
 				$data[ 'urlError' ] = 'This audio already exists in the site.';
 			}
-
-
 
 			//Check if all errors are empty
 			if ( empty( $data[ 'titleError' ] ) && empty( $data[ 'albumError' ] ) && empty( $data[ 'urlError' ] ) )
@@ -83,11 +85,15 @@ class Admin extends Controller
 				else
 				{
 					$data[ 'urlError' ] = 'Something went wrong.';
+
+					$this->view( 'includes/head' );
+					$this->view( 'includes/navigation', $data );
 					$this->view( 'admin/addaudio', $data );
 				}
 			}
 		}
-
+		$this->view( 'includes/head' );
+		$this->view( 'includes/navigation', $data );
 		$this->view( 'admin/addaudio', $data );
 	}
 }

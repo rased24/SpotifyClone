@@ -2,9 +2,9 @@
 
 //Load models and views
 
-class Controller {
-
-	public function model( $model )
+class Controller
+{
+	public function model ( $model )
 	{
 		require_once '../app/models/' . $model . '.php';
 
@@ -12,7 +12,7 @@ class Controller {
 		return new $model();
 	}
 
-	public function view( $view, $data = [] )
+	public function view ( $view, $data = [] )
 	{
 		if ( file_exists( '../app/views/' . $view . '.php' ) )
 		{
@@ -22,7 +22,6 @@ class Controller {
 		{
 			die( "View doesn't exist." );
 		}
-
 
 	}
 }

@@ -1,16 +1,12 @@
 ( function ( $ ) {
 
-	$( '#newSongsButton' ).on( 'click',
-		function ()
-		{
+	$( '#newSongsButton' ).on( 'click', function () {
 
-		if ( $( '#newSongs').hasClass( 'hidden' ) )
+		if ( $( '#newSongs' ).hasClass( 'hidden' ) )
 		{
 			$( '#newSongs' ).removeClass( 'hidden' );
 			$( '#randomSongs' ).addClass( 'hidden' );
 			$( '#mostViewedSongs' ).addClass( 'hidden' );
-
-
 		}
 		else
 		{
@@ -18,17 +14,13 @@
 		}
 	} );
 
-	$( '#randomSongsButton' ).on( 'click',
-		function ()
-		{
+	$( '#randomSongsButton' ).on( 'click', function () {
 
-		if ( $( '#randomSongs').hasClass( 'hidden' ) )
+		if ( $( '#randomSongs' ).hasClass( 'hidden' ) )
 		{
 			$( '#randomSongs' ).removeClass( 'hidden' );
 			$( '#newSongs' ).addClass( 'hidden' );
 			$( '#mostViewedSongs' ).addClass( 'hidden' );
-
-
 		}
 		else
 		{
@@ -36,27 +28,21 @@
 		}
 	} );
 
-	$( '#mostViewedSongsButton' ).on( 'click',
-		function ()
+	$( '#mostViewedSongsButton' ).on( 'click', function () {
+
+		if ( $( '#mostViewedSongs' ).hasClass( 'hidden' ) )
 		{
-
-			if ( $( '#mostViewedSongs').hasClass( 'hidden' ) )
-			{
-				$( '#mostViewedSongs' ).removeClass( 'hidden' );
-				$( '#newSongs' ).addClass( 'hidden' );
-				$( '#randomSongs' ).addClass( 'hidden' );
-
-
-			}
-			else
-			{
-				$( '#mostViewedSongs' ).addClass( 'hidden' );
-			}
-		} );
-
-	$( 'input[type=radio]' ).on( 'change',
-		function ()
+			$( '#mostViewedSongs' ).removeClass( 'hidden' );
+			$( '#newSongs' ).addClass( 'hidden' );
+			$( '#randomSongs' ).addClass( 'hidden' );
+		}
+		else
 		{
-			$( '#playAudio' ).submit();
-		} );
-} ) ( jQuery );
+			$( '#mostViewedSongs' ).addClass( 'hidden' );
+		}
+	} );
+
+	$( 'input[type=radio]' ).on( 'change', function () {
+		$( '#playAudio' ).submit();
+	} );
+} )( jQuery );
