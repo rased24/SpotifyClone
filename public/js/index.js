@@ -1,5 +1,7 @@
 ( function ( $ ) {
 
+	$( '#navbar' ).removeClass( 'navbar' );
+	
 	$( '#newSongsButton' ).on( 'click', function () {
 
 		if ( $( '#newSongs' ).hasClass( 'hidden' ) )
