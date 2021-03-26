@@ -2,6 +2,9 @@
 	<div class="wrapper-login">
 		<div class="list-group">
 			<input type="text" id="root" value="<?= URLROOT ?>" hidden>
+			<span class="invalidFeedback" id="message">
+				<?= isset( $data[ 'message' ] ) ? $data[ 'message' ] : '' ?>
+			</span>
 			<button type="button" class="list-group-item list-group-item-action active">Your Playlists</button>
 			<div id="list-tab">
 				<?php foreach ( Store::playlists() as $audio ): ?>

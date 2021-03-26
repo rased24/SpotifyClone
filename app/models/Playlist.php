@@ -75,6 +75,22 @@ class Playlist
 		}
 	}
 
+	public function deletePlaylist ( $playlist_id )
+	{
+		$this->db->query( 'DELETE FROM playlists WHERE playlist_id = :playlist_id' );
+
+		$this->db->bind( ':playlist_id', $playlist_id );
+
+		if ( $this->db->execute() )
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
 	public function addToPlaylist( $data )
 	{
 		$this->db->query( 'UPDATE playlists SET audios = :audios WHERE playlist_id = :playlist_id' );

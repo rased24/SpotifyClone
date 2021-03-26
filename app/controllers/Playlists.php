@@ -40,10 +40,100 @@ class Playlists extends Controller
 		$this->view( 'pages/createplaylist', $data );
 	}
 
+	public function editplaylist ()
+	{
+		if ( isset( Store::user()->is_admin ) )
+		{
+			$data = [
+				'ID'          => Store::user()->ID,
+				'playlist_id' => '',
+				'message'     => ''
+			];
+			if ( $_SERVER[ 'REQUEST_METHOD' ] === 'GET' )
+			{
+				$data[ 'playlist_id' ] = $_GET[ 'playlist_id' ];
+
+				//Validate playlist_id
+				if ( empty( $data[ 'playlist_id' ] ) )
+				{
+					$data[ 'message' ] = 'Invalid request.';
+				}
+				else if ( ! isset( $this->playlistModel->findPlaylistBy( 'playlist_id', $data[ 'playlist_id' ] )->playlist_id ) )
+				{
+					$data[ 'message' ] = 'Invalid request.';
+				}
+				else if ( $this->playlistModel->findPlaylistBy( 'playlist_id', $data[ 'playlist_id' ] )->ID !== $data[ 'ID' ] )
+				{
+					$data[ 'message' ] = 'Invalid request.';
+				}
+
+				//Check if there's no errors
+				if ( empty( $data[ 'message' ] ) )
+				{
+				}
+			}
+			$this->view( 'includes/head' );
+			$this->view( 'includes/navigation' );
+			$this->view( 'pages/createplaylist', $data );
+		}
+		else
+		{
+			$this->view( 'includes/head' );
+			$this->view( 'includes/navigation' );
+			$this->view( 'pages/error' );
+		}
+	}
+
+	public function removeplaylist ()
+	{
+
+		if ( isset( Store::user()->is_admin ) )
+		{
+			$data = [
+				'ID'          => Store::user()->ID,
+				'playlist_id' => '',
+				'message'     => ''
+			];
+			if ( $_SERVER[ 'REQUEST_METHOD' ] === 'GET' )
+			{
+				$data[ 'playlist_id' ] = $_GET[ 'playlist_id' ];
+
+				//Validate playlist_id
+				if ( empty( $data[ 'playlist_id' ] ) )
+				{
+					$data[ 'message' ] = 'Invalid request.';
+				}
+				else if ( ! isset( $this->playlistModel->findPlaylistBy( 'playlist_id', $data[ 'playlist_id' ] )->playlist_id ) )
+				{
+					$data[ 'message' ] = 'Invalid request.';
+				}
+				else if ( $this->playlistModel->findPlaylistBy( 'playlist_id', $data[ 'playlist_id' ] )->ID !== $data[ 'ID' ] )
+				{
+					$data[ 'message' ] = 'Invalid request.';
+				}
+
+				//Check if there's no errors
+				if ( empty( $data[ 'message' ] ) )
+				{
+					$this->playlistModel->deletePlaylist( $data[ 'playlist_id' ] );
+				}
+			}
+			$this->view( 'includes/head' );
+			$this->view( 'includes/navigation' );
+			$this->view( 'playlists/playlists', $data );
+		}
+		else
+		{
+			$this->view( 'includes/head' );
+			$this->view( 'includes/navigation' );
+			$this->view( 'pages/error' );
+		}
+	}
+
 	//All playlists
 	public function playlists ()
 	{
-		if ( isset( Store::user()->is_admin ) && ( Store::user()->is_admin == '0' || Store::user()->is_admin == '1' ) )
+		if ( isset( Store::user()->is_admin ) )
 		{
 			$this->view( 'includes/head' );
 			$this->view( 'includes/navigation' );
@@ -77,7 +167,7 @@ class Playlists extends Controller
 				{
 					$data[ 'message' ] = 'Playlist Id can\'t be empty.';
 				}
-				elseif ($this->playlistModel->findPlaylistBy( 'playlist_id', $data[ 'playlist_id' ] )->ID !== Store::user()->ID )
+				else if ( $this->playlistModel->findPlaylistBy( 'playlist_id', $data[ 'playlist_id' ] )->ID !== Store::user()->ID )
 				{
 					header( 'location:' . URLROOT . '/pages/error' );
 				}
@@ -266,33 +356,6 @@ class Playlists extends Controller
 			$this->view( 'includes/head' );
 			$this->view( 'includes/navigation' );
 			$this->view( 'playlists/playlist', $data );
-		}
-		else
-		{
-			$this->view( 'includes/head' );
-			$this->view( 'includes/navigation' );
-			$this->view( 'pages/error' );
-		}
-	}
-
-	public function removeplaylist ()
-	{
-		if ( isset( Store::user()->is_admin ) )
-		{
-
-			$data = [
-				'ID'          => Store::user()->ID,
-				'playlist_id' => ''
-			];
-
-			if ( $_SERVER[ 'REQUEST_METHOD' ]  === 'GET' )
-			{
-				$data[ 'playlist_id' ] = $_GET[ 'playlist_id' ];
-			}
-
-			$this->view( 'includes/head' );
-			$this->view( 'includes/navigation' );
-			$this->view( 'playlists/playlists', $data );
 		}
 		else
 		{
