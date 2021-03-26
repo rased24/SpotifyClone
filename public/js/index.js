@@ -37,10 +37,4 @@
 			$( '#mostViewedSongs' ).addClass( 'hidden' );
 		}
 	} );
-
-	$( 'input[type=radio]' ).on( 'change', function () {
-		$( '#playAudio' ).submit();
-	} );
-
-
 } )( jQuery );

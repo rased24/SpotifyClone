@@ -185,6 +185,7 @@ input::placeholder {
     visibility: hidden;
 }
 
+
 .song-container {
     display: table;
     table-layout: fixed;
@@ -199,4 +200,18 @@ input::placeholder {
 .add-list {
     width: 100px;
     font-size: 5px;
+}
+
+#list-tab div{
+    display: table;
+    position: static;
+}
+
+#list-tab div a {
+    display: table-cell;
+
+}
+
+.center {
+    position: center;
 }

@@ -3,11 +3,11 @@
 		<h2>Sign in</h2>
 		<form action="<?= URLROOT ?>/users/login" method="post">
 			<input type="text" name="username" placeholder="Username*">
-			<span class="invalidFeedback">
+			<span class="invalidFeedback" id="message">
 				<?= $data[ 'usernameError' ] ?>
 			</span>
 			<input type="password" name="password" placeholder="Password*">
-			<span class="invalidFeedback">
+			<span class="invalidFeedback" id="message">
 				<?= $data[ 'passwordError' ] ?>
 			</span>
 			<br>
@@ -18,3 +18,5 @@
 		</form>
 	</div>
 </div>
+
+<script src="<?=URLROOT?>/public/js/createplaylist.js"></script>

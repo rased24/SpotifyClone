@@ -11,4 +11,6 @@
 			$( '#thumbnail' ).val( data.thumbnail_url );
 		} );
 	} );
+
+	$( '[id=message]' ).fadeOut( 3000 );
 } )( jQuery );

@@ -7,16 +7,24 @@
 			<li>
 				<a href="<?= URLROOT ?>/pages/about">About</a>
 			</li>
+			<?php if ( isset( Store::user()->is_admin ) ):?>
+				<li>
+					<a href="<?= URLROOT ?>/pages/createplaylist">Create Playlist</a>
+				</li>
+			<?php endif;?>
+			<li>
+				<a href="<?= URLROOT ?>/pages/allaudios">All Musics</a>
+			</li>
 			<?php if ( isset( Store::user()->is_admin ) && Store::user()->is_admin == '1' ): ?>
 				<li>
 					<a href="<?= URLROOT ?>/admin/addaudio">Add Music</a>
 				</li>
-			<?php elseif ( isset( Store::user()->is_admin ) && Store::user()->is_admin == '0' ): ?>
-				<li>
-					<a href="<?= URLROOT ?>/users/playlist">Playlist</a>
-				</li>
 			<?php endif; ?>
-
+			<?php if ( isset( Store::user()->is_admin ) ):?>
+				<li>
+					<a href="<?= URLROOT ?>/playlists/playlists">Playlists</a>
+				</li>
+			<?php endif;?>
 			<li>
 				<?php if ( isset( Store::user()->ID ) ): ?>
 					<a href="<?= URLROOT ?>/users/logout" class="btn-login">Log out</a>

@@ -2,8 +2,7 @@
 
 class Store
 {
-
-	public function __construct()
+	public function __construct ()
 	{
 	}
 
@@ -19,5 +18,19 @@ class Store
 		$audioModel = new Audio();
 
 		return $audioModel->getAudios();
+	}
+
+	public static function playlists ()
+	{
+		$playlistModel = new Playlist();
+
+		return  $playlistModel->getPlaylist( self::user()->ID ) ;
+	}
+
+	public static function playlist ( $playlist_id )
+	{
+		$playlistModel = new  Playlist();
+
+		return $playlistModel->findPlaylistBy( 'playlist_id', $playlist_id );
 	}
 }

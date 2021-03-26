@@ -5,15 +5,15 @@
 				<img src="" id="thumbnailImg" class="" alt="">
 			</div>
 			<input type="url" id="videoUrl" name="url" class="audio-input" placeholder="add url here">
-			<span class="invalidFeedback">
+			<span class="invalidFeedback" id="message">
 				<?= $data[ 'urlError' ] ?>
 			</span>
 			<input type="text" id="videoTitle" name="title" value="" placeholder="video title">
-			<span class="invalidFeedback">
+			<span class="invalidFeedback" id="message">
 				<?= $data[ 'titleError' ] ?>
 			</span>
 			<input type="text" id="videoAlbum" name="album" value="" placeholder="video album">
-			<span class="invalidFeedback">
+			<span class="invalidFeedback" id="message">
 				<?= $data[ 'albumError' ] ?>
 			</span>
 			<br>
